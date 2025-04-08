@@ -24,13 +24,13 @@ export default async function Wishlist() {
   }
 
   return (
-    <div>
-      <ul className="list bg-blue-200 rounded-lg shadow-md border border-gray-300">
+    <div className="bg-gray-100 border border-gray-300 rounded-lg shadow-md p-1">
+      <ul className="list bg-blue-200 rounded-md border border-gray-200">
         <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
           Things you've saved for later
         </li>
         {errorMessage ? (
-          <li className="p-8 bg-white">
+          <li className="p-8 rounded-md bg-white">
             <div className="max-w-sm mx-auto">
               <div
                 className="p-4 my-8 text-sm text-red-800 rounded-lg bg-red-100"
@@ -41,7 +41,7 @@ export default async function Wishlist() {
             </div>
           </li>
         ) : wishlistItems.length === 0 ? (
-          <li className="p-8 bg-white">
+          <li className="p-8 rounded-md bg-white">
             <div className="max-w-sm mx-auto">
               <div
                 className="p-4 text-sm text-center text-gray-800 rounded-lg bg-gray-100"
@@ -53,7 +53,7 @@ export default async function Wishlist() {
           </li>
         ) : (
           wishlistItems.map((item: any, index: number) => (
-            <li key={index} className="list-row py-4 px-8 bg-white">
+            <li key={index} className="list-row rounded-md py-4 px-8 bg-white">
               <div>
                 <img
                   src={`data:image/jpeg;base64,${item.productImage}`}
@@ -75,7 +75,7 @@ export default async function Wishlist() {
               </div>
               <RemoveWishlistItemButton
                 wishlistId={wishlistId}
-                itemId={item.id}
+                itemId={item.itemId}
               />
             </li>
           ))

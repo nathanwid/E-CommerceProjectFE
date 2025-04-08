@@ -30,9 +30,9 @@ export default async function Cart() {
   }
 
   return (
-    <div className="overflow-x-auto rounded-box bg-gray-100 rounded-lg shadow-md border border-gray-300">
-      <table className="table">
-        <thead className="bg-blue-200 text-gray-800 text-center uppercase">
+    <div className="overflow-x-auto rounded-box bg-gray-100 rounded-lg shadow-md border border-gray-300 p-1">
+      <table className="table border border-gray-200">
+        <thead className="bg-blue-200 text-gray-800 text-center uppercase border-b-2">
           <tr>
             <th>Item</th>
             <th>Price</th>
@@ -44,7 +44,7 @@ export default async function Cart() {
         <tbody>
           {errorMessage ? (
             <tr>
-              <td colSpan={6} className="text-center p-8 bg-white rounded-md">
+              <td colSpan={6} className="text-center p-8 bg-white">
                 <div className="max-w-sm mx-auto">
                   <div
                     className="p-4 my-8 text-sm text-red-800 rounded-lg bg-red-100"
@@ -57,7 +57,7 @@ export default async function Cart() {
             </tr>
           ) : cartItems.length === 0 ? (
             <tr>
-              <td colSpan={6} className="text-center p-8 bg-white rounded-md">
+              <td colSpan={6} className="text-center p-8 bg-white">
                 <div className="max-w-sm mx-auto">
                   <div
                     className="p-4 text-sm text-center text-gray-800 rounded-lg bg-gray-100"
@@ -70,10 +70,7 @@ export default async function Cart() {
             </tr>
           ) : (
             cartItems.map((item: any, index: number) => (
-              <tr
-                key={index}
-                className="bg-white rounded-md border border-gray-100"
-              >
+              <tr key={index} className="bg-white border-b-gray-300">
                 <td>
                   <div className="flex items-center gap-4">
                     <img
@@ -93,13 +90,13 @@ export default async function Cart() {
                   <div className="flex items-center justify-center gap-2">
                     <DecreaseQuantityButton
                       cartId={cartId}
-                      itemId={item.id}
+                      itemId={item.itemId}
                       quantity={item.quantity}
                     />
                     <span className="w-4 text-center">{item.quantity}</span>
                     <IncreaseQuantityButton
                       cartId={cartId}
-                      itemId={item.id}
+                      itemId={item.itemId}
                       quantity={item.quantity}
                     />
                   </div>
@@ -108,13 +105,13 @@ export default async function Cart() {
                   Rp{(item.productPrice * item.quantity).toLocaleString("id")}
                 </td>
                 <td>
-                  <RemoveCartItemButton cartId={cartId} itemId={item.id} />
+                  <RemoveCartItemButton cartId={cartId} itemId={item.itemId} />
                 </td>
               </tr>
             ))
           )}
           {cartItems.length > 0 && (
-            <tr className="bg-white rounded-md border border-gray-100">
+            <tr className="bg-white rounded-md border-b-gray-300">
               <td
                 colSpan={3}
                 className="py-3 px-6 text-right text-md font-semibold uppercase"

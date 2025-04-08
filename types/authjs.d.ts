@@ -7,6 +7,7 @@ declare module "next-auth" {
   }
 
   interface User {
+    userId: string;
     role: string;
     cartId: string;
     wishlistId: string;

@@ -61,6 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     jwt({ token, user }) {
       if (user) {
+        token.sub = user.userId;
         token.role = user.role;
         token.accessToken = user.token;
         token.cartId = user.cartId;

@@ -1,6 +1,7 @@
 "use client";
 
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Eye, Minus, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
@@ -132,7 +133,7 @@ export function DecreaseQuantityButton({
   return (
     <button
       onClick={() => handleDecrease()}
-      className="rounded-md p-1 bg-gray-200 hover:bg-gray-400 hover:cursor-pointer"
+      className="rounded-md p-1 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer"
     >
       <Minus size={16} />
     </button>
@@ -170,7 +171,7 @@ export function IncreaseQuantityButton({
   return (
     <button
       onClick={() => handleIncrease()}
-      className="rounded-md p-1 bg-gray-200 hover:bg-gray-400 hover:cursor-pointer"
+      className="rounded-md p-1 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer"
     >
       <Plus size={16} />
     </button>
@@ -258,5 +259,16 @@ export function CheckoutButton({ userId }: { userId?: string }) {
     >
       Checkout
     </button>
+  );
+}
+
+export function OrderDetailButton({ orderId }: { orderId: string }) {
+  return (
+    <Link
+      href={`/account/orders/${orderId}`}
+      className="rounded-md p-1 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer"
+    >
+      <Eye size={20} className="text-gray-600" />
+    </Link>
   );
 }
