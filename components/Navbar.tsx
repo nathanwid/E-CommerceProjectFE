@@ -41,7 +41,7 @@ export default async function Navbar() {
       <div className="max-w-screen-xl flex items-center justify-between mx-auto px-20 py-5">
         <Link
           href="/"
-          className="btn btn-ghost text-white font-bold text-2xl bg-slate-800 hover:bg-slate-900 border border-transparent hover:border-none p-4"
+          className="btn btn-ghost text-blue-200 font-bold text-2xl bg-slate-800 hover:bg-slate-900 border border-transparent hover:border-none p-4"
         >
           ACME Ltd
         </Link>
