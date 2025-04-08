@@ -261,14 +261,3 @@ export function CheckoutButton({ userId }: { userId?: string }) {
     </button>
   );
 }
-
-export function OrderDetailButton({ orderId }: { orderId: string }) {
-  return (
-    <Link
-      href={`/account/orders/${orderId}`}
-      className="rounded-md p-1 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer"
-    >
-      <Eye size={20} className="text-gray-600" />
-    </Link>
-  );
-}

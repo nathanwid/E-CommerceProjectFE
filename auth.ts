@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { SignInSchema } from "./lib/zod";
+import { PathnameContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
@@ -41,20 +42,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
+      const pathname = nextUrl.pathname;
+      const role = auth?.user.role;
       const isLoggedIn = !!auth?.user;
-      const protectedRoutes = [
-        "/",
-        "/account/profile",
-        "/account/cart",
-        "/account/orders",
-        "/account/wishlist",
-      ];
+      const isAdminRoute = pathname.startsWith("/admin");
+      const isUserRoute = pathname === "/" || pathname.startsWith("/account");
 
-      if (!isLoggedIn && protectedRoutes.includes(nextUrl.pathname)) {
+      if (!isLoggedIn && (isUserRoute || isAdminRoute)) {
         return Response.redirect(new URL("/login", nextUrl));
       }
 
-      if (isLoggedIn && nextUrl.pathname.startsWith("/login")) {
+      if (isAdminRoute && role !== "admin") {
+        return Response.redirect(new URL("/", nextUrl));
+      }
+
+      if (isLoggedIn && role === "admin" && pathname === "/") {
+        return Response.redirect(new URL("/admin", nextUrl));
+      }
+
+      if (isLoggedIn && pathname.startsWith("/login")) {
+        if (role === "admin") {
+          return Response.redirect(new URL("/admin", nextUrl));
+        }
         return Response.redirect(new URL("/", nextUrl));
       }
 

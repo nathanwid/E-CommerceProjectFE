@@ -35,6 +35,7 @@ const links = [
 
 export default async function Navbar() {
   const session = await auth();
+  const isAdmin = session?.user.role === "admin";
 
   return (
     <nav className="bg-white border-gray-300 border-b shadow-md">
@@ -48,18 +49,32 @@ export default async function Navbar() {
         <div className="flex items-center gap-8">
           <ul className="hidden md:flex items-center gap-8 mr-5 font-bold">
             <li>
-              <Link href="/" className="text-gray-600 hover:text-gray-800">
+              <Link
+                href={isAdmin ? "/admin" : "/"}
+                className="text-gray-600 hover:text-gray-800"
+              >
                 Home
               </Link>
             </li>
-            <li>
-              <Link
-                href="/account/profile"
-                className="text-gray-600 hover:text-gray-800"
-              >
-                Account
-              </Link>
-            </li>
+            {!isAdmin ? (
+              <li>
+                <Link
+                  href="/account/profile"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  Account
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link
+                  href="/admin/orders"
+                  className="text-gray-600 hover:text-gray-800"
+                >
+                  Orders
+                </Link>
+              </li>
+            )}
           </ul>
           <div className="flex gap-4 items-center">
             <div className="flex flex-col justify-center -space-y-1">
@@ -87,17 +102,18 @@ export default async function Navbar() {
                 tabIndex={0}
                 className="menu menu-md dropdown-content bg-white font-medium rounded-lg space-y-1 z-1 mt-3 w-42 p-2 shadow-md border border-gray-300"
               >
-                {links.map(({ href, icon, label }) => (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      className="flex items-center text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
-                    >
-                      {icon}
-                      {label}
-                    </Link>
-                  </li>
-                ))}
+                {!isAdmin &&
+                  links.map(({ href, icon, label }) => (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        className="flex items-center text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                      >
+                        {icon}
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
                 <li className="w-full text-gray-600 hover:text-gray-800 hover:bg-gray-100 hover:cursor-pointer transition-colors">
                   <form action={signOutAction}>
                     <button
