@@ -6,6 +6,7 @@ import ProductList from "@/components/products/ProductList";
 import ProductFilter from "@/components/products/ProductFilter";
 import { getProducts } from "@/lib/api";
 import PaginationControl from "@/components/PaginationControl";
+import ProductsTable from "@/components/admin/ProductsTable";
 
 interface Product {
   productId: string;
@@ -71,7 +72,7 @@ export default function Page() {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">All Products</h1>
+      <h1 className="text-2xl font-bold mb-6">Products</h1>
       <ProductFilter />
       {loading ? (
         <div className="loading">Loading products...</div>
@@ -79,13 +80,11 @@ export default function Page() {
         <div className="alert alert-error">Error: {error}</div>
       ) : products.length > 0 ? (
         <>
-          <ProductList products={products} />
-          <div className="mt-8 flex justify-center">
-            <PaginationControl
-              currentPage={pageNumber}
-              totalPages={totalPages}
-            />
-          </div>
+          <ProductsTable
+            products={products}
+            currentPage={pageNumber}
+            totalPages={totalPages}
+          />
         </>
       ) : (
         <p className="text-center text-gray-500">No products found.</p>

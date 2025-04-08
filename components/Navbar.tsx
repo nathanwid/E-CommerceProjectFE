@@ -57,23 +57,51 @@ export default async function Navbar() {
               </Link>
             </li>
             {!isAdmin ? (
-              <li>
-                <Link
-                  href="/account/profile"
-                  className="text-gray-600 hover:text-gray-800"
-                >
-                  Account
-                </Link>
-              </li>
+              <>
+                <li>
+                  <Link
+                    href="/products"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/account/profile"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Account
+                  </Link>
+                </li>
+              </>
             ) : (
-              <li>
-                <Link
-                  href="/admin/orders"
-                  className="text-gray-600 hover:text-gray-800"
-                >
-                  Orders
-                </Link>
-              </li>
+              <>
+                <li>
+                  <Link
+                    href="/admin/products"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/admin/users"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Users
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/admin/orders"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Orders
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
           <div className="flex gap-4 items-center">

@@ -4,7 +4,7 @@ import PaginationControl from "../PaginationControl";
 import Link from "next/link";
 import { Eye } from "lucide-react";
 
-export default async function Orders({
+export default async function AllOrdersTable({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | undefined }>;
