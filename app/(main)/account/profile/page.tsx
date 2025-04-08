@@ -4,6 +4,7 @@ import ProfileForm from "@/components/account/ProfileForm";
 
 export default async function page() {
   const session = await auth();
+  const token = session?.user?.token;
   const userId = session?.user.id;
   {
   }
@@ -11,7 +12,7 @@ export default async function page() {
   return (
     <>
       <h1 className="text-2xl mb-8 font-bold">My Profile</h1>
-      <ProfileForm />
+      <ProfileForm token={token} />
       <AddressForm userId={userId} />
     </>
   );

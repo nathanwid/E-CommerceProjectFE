@@ -1,5 +1,5 @@
 import OrderFilter from "@/components/OrderFilter";
-import Orders from "@/components/account/Orders";
+import AllOrders from "@/components/admin/AllOrders";
 
 export default async function page({
   searchParams,
@@ -8,9 +8,9 @@ export default async function page({
 }) {
   return (
     <>
-      <h1 className="text-2xl mb-8 font-bold">My Orders</h1>
+      <h1 className="text-2xl mb-8 font-bold">Orders</h1>
       <OrderFilter />
-      <Orders searchParams={searchParams} />
+      <AllOrders searchParams={searchParams} />
     </>
   );
 }

@@ -14,9 +14,6 @@ export default async function Orders({
   const status = resolvedParams.status || "";
   const orderState = resolvedParams.orderState || "";
 
-  const session = await auth();
-  const userId = session?.user.id;
-
   let data = null;
   let orders = [];
   let errorMessage;
@@ -24,7 +21,7 @@ export default async function Orders({
   try {
     const queryParams = new URLSearchParams({ page, status, orderState });
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/orders/user/${userId}?${queryParams}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/orders?${queryParams}`,
       { cache: "no-store" }
     );
     data = await res.json();
@@ -78,6 +75,9 @@ export default async function Orders({
         <thead className="bg-blue-200 text-gray-800 text-center uppercase border-b-2">
           <tr>
             <th>Order #</th>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th>Date Purchased</th>
             <th>Status</th>
             <th>Total</th>
@@ -117,18 +117,15 @@ export default async function Orders({
                 <td className="py-3 px-6 text-center font-semibold">
                   {index + 1}
                 </td>
+                <td className="py-3 px-6 text-center">{order.userName}</td>
+                <td className="py-3 px-6 text-center">{order.email}</td>
+                <td className="py-3 px-6 text-center">{order.phoneNumber}</td>
                 <td className="py-3 px-6 text-center">
-                  {`${new Date(order.orderDate).toLocaleDateString("en-US", {
-                    weekday: "long",
-                  })}, ${new Date(order.orderDate).toLocaleDateString("id-ID", {
+                  {`${new Date(order.orderDate).toLocaleDateString("id-ID", {
                     day: "2-digit",
                     month: "long",
                     year: "numeric",
-                  })} ${new Date(order.orderDate).toLocaleTimeString("id-ID", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  })} WIB`}
+                  })}`}
                 </td>
                 <td className="py-3 px-6 text-center">
                   {getStatusBadge(order.status)}
@@ -138,7 +135,7 @@ export default async function Orders({
                 </td>
                 <td className="py-3 px-6 flex justify-center items-center">
                   <Link
-                    href={`/account/orders/${order.orderId}`}
+                    href={`/admin/orders/${order.orderId}`}
                     className="rounded-md p-1 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer"
                   >
                     <Eye size={20} className="text-gray-600" />

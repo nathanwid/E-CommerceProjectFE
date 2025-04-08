@@ -3,6 +3,7 @@
 import { signIn, signOut } from "@/auth";
 import { RegisterSchema, SignInSchema } from "./zod";
 import { AuthError } from "next-auth";
+import { getSession } from "next-auth/react";
 
 export async function signOutAction() {
   await signOut({ redirectTo: "/login" });

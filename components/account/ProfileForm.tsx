@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function ProfileForm() {
+export default function ProfileForm({ token }: { token?: string }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -12,13 +12,21 @@ export default function ProfileForm() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch("/api/account/profile");
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/me`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (res.ok) {
           const data = await res.json();
           setForm({
             name: data.name || "",
             email: data.email || "",
-            phone: data.phone || "",
+            phone: data.phoneNumber || "",
           });
         }
       } catch (error) {
