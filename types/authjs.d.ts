@@ -13,6 +13,7 @@ declare module "next-auth" {
     wishlistId: string;
     token: string;
   }
+  
 }
 
 declare module "next-auth/jwt" {
