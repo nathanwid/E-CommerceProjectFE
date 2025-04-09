@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 
-export default async function Home() {
+export default async function HomePage() {
   const session = await auth();
 
   return (

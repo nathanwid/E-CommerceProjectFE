@@ -261,3 +261,64 @@ export function CheckoutButton({ userId }: { userId?: string }) {
     </button>
   );
 }
+
+export function DeleteCategoryButton({ categoryId }: { categoryId?: string }) {
+  const router = useRouter();
+  const handleDelete = async () => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/categories/${categoryId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      router.refresh();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  return (
+    <button
+      className="rounded-md p-1 bg-red-600 hover:bg-red-700 hover:cursor-pointer"
+      onClick={() => handleDelete()}
+    >
+      <Trash2 size={20} color="#fff" />
+    </button>
+  );
+}
+
+export function DeleteProductButton({
+  productId,
+  onDeleted,
+}: {
+  productId?: string;
+  onDeleted?: () => void;
+}) {
+  const router = useRouter();
+  const handleDelete = async () => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/products/${productId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (onDeleted) {
+        onDeleted();
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
+
+  return (
+    <button
+      className="rounded-md p-1 bg-red-600 hover:bg-red-700 hover:cursor-pointer"
+      onClick={() => handleDelete()}
+    >
+      <Trash2 size={20} color="#fff" />
+    </button>
+  );
+}
