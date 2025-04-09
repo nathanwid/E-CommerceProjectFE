@@ -9,7 +9,7 @@ import { refreshProductDetailsAction } from '@/app/(main)/products/[productId]/a
 interface PostReviewProps {
   productId: string;
 }
-
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState<number | null>(null);
@@ -51,7 +51,7 @@ const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
     setError(null);
 
     try {
-      const response = await fetch(`/api/ControllerReview/product/post/${productId}/review`, {
+      const response = await fetch(`${API_BASE_URL}/api/ControllerReview/product/post/${productId}/review`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,10 +66,25 @@ const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData?.message || 'Failed to post review.');
+        let errorMessage = 'Failed to post review.';
+      
+        try {
+          const contentType = response.headers.get('Content-Type') || '';
+          if (contentType.includes('application/json')) {
+            const errorData = await response.json();
+            errorMessage = errorData?.message || errorMessage;
+          } else {
+            const text = await response.text();
+            errorMessage = text || errorMessage;
+          }
+        } catch (e) {
+          errorMessage = 'Unexpected error occurred while reading error response.';
+        }
+      
+        setError(errorMessage);
         return;
       }
+      
 
       closeModal();
       // Instead of calling a prop, call the Server Action
