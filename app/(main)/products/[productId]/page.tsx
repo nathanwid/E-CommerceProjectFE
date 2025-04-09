@@ -40,13 +40,19 @@ async function ProductDetailsPage({
   }
 
   return (
-    <>
+    <SessionProvider>
       <Head>
         <title>{product.productName} - Product Details</title>
       </Head>
       <div className="container mx-auto py-8">
         <h1 className="text-2xl font-semibold mb-4">{product.productName}</h1>
         <ProductDetails product={product} />
+        <div className="mt-4">
+          <PostReview
+            productId={productId}
+            // We no longer pass the refresh function as a prop
+          />
+        </div>
         <div className="mt-8">
           <button>
             <Link
@@ -59,7 +65,7 @@ async function ProductDetailsPage({
           {}
         </div>
       </div>
-    </>
+    </SessionProvider>
   );
 }
 

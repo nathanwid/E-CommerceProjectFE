@@ -67,6 +67,7 @@ export default function ProductsPage() {
     fetchProducts();
   }, [searchParams]);
 
+  
   const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
