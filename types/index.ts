@@ -13,3 +13,8 @@ export interface Product {
     totalCount: number;
   }
   
+  export interface Review {
+    rating: number;
+    comment: string;
+    createdAt: string;
+  }

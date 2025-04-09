@@ -1,5 +1,5 @@
 // lib/api.ts
-import { PaginatedProductResponse } from "@/types"; // Adjust path if needed
+import { PaginatedProductResponse, Product, Review } from "@/types"; // Adjust path if needed
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL; // Use environment variable
 
@@ -61,5 +61,28 @@ export async function getProducts(
     // Depending on how you want to handle errors on the page
     return { products: [], totalCount: 0 };
     // Or: throw new Error('Could not connect to API');
+  }
+}
+
+// utils/api.ts
+// ... (previous imports and interfaces)
+
+interface SingleProductResponse extends Product {
+  productDescription?: string;
+  reviews?: Review[];
+}
+
+export async function fetchProductDetails(productId: string): Promise<SingleProductResponse> {
+  const url = `${API_BASE_URL}/api/ControllerProducts/product/view/${productId}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Error fetching product details for ID ${productId}:`, error);
+    throw error;
   }
 }
