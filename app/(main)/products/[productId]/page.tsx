@@ -5,8 +5,10 @@ import ProductDetails from '@/components/products/ProductDetails';
 import { Review, Product } from '@/types/index';
 import Head from 'next/head';
 import Link from 'next/link';
+import PostReview from '@/components/reviews/PostReview';
+import { SessionProvider } from 'next-auth/react';
 
-// This is now an Async Server Component
+// This remains an Async Server Component
 async function ProductDetailsPage({ params }: { params: { productId: string } }) {
   const { productId } = params;
   let product: (Product & { productDescription?: string; reviews?: Review[] }) | null = null;
@@ -28,13 +30,19 @@ async function ProductDetailsPage({ params }: { params: { productId: string } })
   }
 
   return (
-    <>
+    <SessionProvider>
       <Head>
         <title>{product.productName} - Product Details</title>
       </Head>
       <div className="container mx-auto py-8">
         <h1 className="text-2xl font-semibold mb-4">{product.productName}</h1>
         <ProductDetails product={product} />
+        <div className="mt-4">
+          <PostReview
+            productId={productId}
+            // We no longer pass the refresh function as a prop
+          />
+        </div>
         <div className="mt-8">
           <button><Link
             href={`/products/`}
@@ -44,7 +52,7 @@ async function ProductDetailsPage({ params }: { params: { productId: string } })
           </Link></button> {}
         </div>
       </div>
-    </>
+    </SessionProvider>
   );
 }
 
