@@ -1,7 +1,6 @@
 "use client";
 
-import { Eye, Minus, Plus, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Heart, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 
@@ -319,6 +318,81 @@ export function DeleteProductButton({
       onClick={() => handleDelete()}
     >
       <Trash2 size={20} color="#fff" />
+    </button>
+  );
+}
+
+export function AddToCartButton({
+  cartId,
+  productId,
+}: {
+  cartId?: string;
+  productId: string;
+}) {
+  const handleAddToCart = async () => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/cart/${cartId}/items`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId, quantity: 1 }),
+        }
+      );
+      alert("Product added to cart!");
+    } catch (err) {
+      alert("Failed to add to cart.");
+      console.error(err);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleAddToCart}
+      className="btn btn-primary flex items-center gap-2"
+    >
+      <ShoppingCart size={20} />
+      Add to Cart
+    </button>
+  );
+}
+
+export default function AddToWishlistButton({
+  wishlistId,
+  productId,
+}: {
+  wishlistId?: string;
+  productId: string;
+}) {
+  console.log(productId);
+  const handleAddToWishlist = async () => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/wishlist/${wishlistId}/items`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId }),
+        }
+      );
+      alert("Added to wishlist!");
+    } catch (err) {
+      alert("Failed to add to wishlist.");
+      console.error(err);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleAddToWishlist}
+      className="btn btn-outline btn-secondary flex items-center gap-2"
+    >
+      <Heart size={20} />
+      Wishlist
     </button>
   );
 }

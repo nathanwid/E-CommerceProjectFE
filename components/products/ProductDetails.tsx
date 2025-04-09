@@ -3,12 +3,14 @@ import React from "react";
 import { Product, Review } from "@/types/index";
 import ReviewItem from "@/components/reviews/ReviewItem";
 import Image from "next/image";
+import { auth } from "@/auth";
+import AddToWishlistButton, { AddToCartButton } from "../Buttons";
 
 interface ProductDetailsProps {
   product: Product & { productDescription?: string; reviews?: Review[] };
 }
 
-const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
+const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
   const {
     productName,
     productImage,
@@ -17,6 +19,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     productStock,
     reviews,
   } = product;
+
+  const session = await auth();
 
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl">
@@ -57,9 +61,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <p>Stock: {productStock}</p>
         {productDescription && <p>{productDescription}</p>}
         <div className="card-actions">
-          <button className="btn btn-primary">Add to Cart</button>
-          {/* Add other actions as needed */}
+          <AddToCartButton
+            cartId={session?.user.cartId}
+            productId={product.productId}
+          />
+          <AddToWishlistButton
+            wishlistId={session?.user.wishlistId}
+            productId={product.productId}
+          />
         </div>
+
         {reviews && reviews.length > 0 && (
           <div className="mt-6">
             <h3 className="font-semibold text-xl mb-2">Customer Reviews</h3>
