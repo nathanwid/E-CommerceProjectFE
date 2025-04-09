@@ -1,10 +1,10 @@
 // components/reviews/PostReview.tsx
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation'; // Import useRouter
-import { refreshProductDetailsAction } from '@/app/(main)/products/[productId]/actions'; // Import the Server Action
+import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation"; // Import useRouter
+import { refreshProductDetailsAction } from "@/app/(main)/products/[productId]/actions"; // Import the Server Action
 
 interface PostReviewProps {
   productId: string;
@@ -13,7 +13,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState<number | null>(null);
-  const [comment, setComment] = useState<string>('');
+  const [comment, setComment] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const { data: session } = useSession();
   const router = useRouter(); // Get the router instance
@@ -25,7 +25,7 @@ const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
   const closeModal = () => {
     setIsOpen(false);
     setRating(null);
-    setComment('');
+    setComment("");
     setError(null);
   };
 
@@ -33,44 +33,49 @@ const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
     setRating(newRating);
   };
 
-  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleCommentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setComment(event.target.value);
   };
 
   const handleSubmit = async () => {
     if (!rating) {
-      setError('Please select a rating.');
+      setError("Please select a rating.");
       return;
     }
 
     if (!token || !userId) {
-      setError('You must be logged in to post a review.');
+      setError("You must be logged in to post a review.");
       return;
     }
 
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/ControllerReview/product/post/${productId}/review`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          userId: userId,
-          productId: productId,
-          comment: comment,
-          rating: rating,
-        }),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/ControllerReview/product/post/${productId}/review`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            userId: userId,
+            productId: productId,
+            comment: comment,
+            rating: rating,
+          }),
+        }
+      );
 
       if (!response.ok) {
-        let errorMessage = 'Failed to post review.';
-      
+        let errorMessage = "Failed to post review.";
+
         try {
-          const contentType = response.headers.get('Content-Type') || '';
-          if (contentType.includes('application/json')) {
+          const contentType = response.headers.get("Content-Type") || "";
+          if (contentType.includes("application/json")) {
             const errorData = await response.json();
             errorMessage = errorData?.message || errorMessage;
           } else {
@@ -78,20 +83,20 @@ const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
             errorMessage = text || errorMessage;
           }
         } catch (e) {
-          errorMessage = 'Unexpected error occurred while reading error response.';
+          errorMessage =
+            "Unexpected error occurred while reading error response.";
         }
-      
+
         setError(errorMessage);
         return;
       }
-      
 
       closeModal();
       // Instead of calling a prop, call the Server Action
       await refreshProductDetailsAction(productId);
       router.refresh(); // Alternatively, use router.refresh() to re-fetch server components
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred.');
+      setError(err.message || "An unexpected error occurred.");
     }
   };
   const safeRating = rating ?? 0; // Use 0 as a default value
@@ -118,7 +123,9 @@ const PostReview: React.FC<PostReviewProps> = ({ productId }) => {
                     key={value}
                     type="radio"
                     name="rating"
-                    className={`mask mask-star-2 ${safeRating >= value ? 'bg-yellow-500' : 'bg-gray-300'}`}
+                    className={`mask mask-star-2 ${
+                      safeRating >= value ? "bg-yellow-500" : "bg-gray-300"
+                    }`}
                     value={value}
                     checked={rating === value}
                     onChange={() => handleRatingChange(value)}

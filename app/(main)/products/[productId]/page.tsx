@@ -5,6 +5,8 @@ import ProductDetails from "@/components/products/ProductDetails";
 import { Review, Product } from "@/types/index";
 import Head from "next/head";
 import Link from "next/link";
+import PostReview from "@/components/reviews/PostReview";
+import { SessionProvider } from "next-auth/react";
 
 // This is now an Async Server Component
 async function ProductDetailsPage({
@@ -46,7 +48,7 @@ async function ProductDetailsPage({
       </Head>
       <div className="container mx-auto py-8">
         <h1 className="text-2xl font-semibold mb-4">{product.productName}</h1>
-        <ProductDetails product={product} />
+        <ProductDetails product={{ ...product, productId }} />
         <div className="mt-4">
           <PostReview
             productId={productId}
