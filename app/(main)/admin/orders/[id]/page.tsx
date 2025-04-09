@@ -1,7 +1,7 @@
 import AdminOrderDetail from "@/components/admin/AdminOrderDetail";
 import React from "react";
 
-export default async function Page({
+export default async function OrderDetailsPage({
   params,
 }: {
   params: Promise<{ id: string }>;

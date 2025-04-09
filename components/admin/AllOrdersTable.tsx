@@ -133,13 +133,15 @@ export default async function AllOrdersTable({
                 <td className="py-3 px-6 text-center">
                   Rp{order.grandTotal.toLocaleString("id")}
                 </td>
-                <td className="py-3 px-6 flex justify-center items-center">
-                  <Link
-                    href={`/admin/orders/${order.orderId}`}
-                    className="rounded-md p-1 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer"
-                  >
-                    <Eye size={20} className="text-gray-600" />
-                  </Link>
+                <td className="py-3 px-6 h-full">
+                  <div className="flex justify-center items-center h-full">
+                    <Link
+                      href={`/admin/orders/${order.orderId}`}
+                      className="rounded-md p-1 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer"
+                    >
+                      <Eye size={20} className="text-gray-600" />
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))

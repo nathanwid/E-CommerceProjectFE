@@ -21,7 +21,7 @@ interface ApiResponse {
   totalCount: number;
 }
 
-export default function Page() {
+export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);

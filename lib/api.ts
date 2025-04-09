@@ -36,7 +36,7 @@ export async function getProducts(
   if (params.orderBy) queryParams.set("orderBy", params.orderBy);
   if (params.orderState) queryParams.set("orderState", params.orderState);
 
-  const url = `${API_BASE_URL}/api/ControllerProducts/product/view/all?${queryParams.toString()}`;
+  const url = `${API_BASE_URL}/api/v1/products?${queryParams.toString()}`;
   console.log(`Workspaceing products from: ${url}`); // For debugging
 
   try {
@@ -72,8 +72,10 @@ interface SingleProductResponse extends Product {
   reviews?: Review[];
 }
 
-export async function fetchProductDetails(productId: string): Promise<SingleProductResponse> {
-  const url = `${API_BASE_URL}/api/ControllerProducts/product/view/${productId}`;
+export async function fetchProductDetails(
+  productId: string
+): Promise<SingleProductResponse> {
+  const url = `${API_BASE_URL}/api/v1/products/${productId}`;
 
   try {
     const response = await fetch(url);

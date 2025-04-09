@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import ProductList from "@/components/products/ProductList";
 import { getProducts } from "@/lib/api";
 
-export default async function () {
+export default async function HomePage() {
   const session = await auth();
 
   // Ambil 6 produk pertama saja tanpa filter

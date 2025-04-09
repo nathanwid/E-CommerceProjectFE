@@ -79,6 +79,14 @@ export default async function Navbar() {
               <>
                 <li>
                   <Link
+                    href="/admin/categories"
+                    className="text-gray-600 hover:text-gray-800"
+                  >
+                    Categories
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/admin/products"
                     className="text-gray-600 hover:text-gray-800"
                   >
