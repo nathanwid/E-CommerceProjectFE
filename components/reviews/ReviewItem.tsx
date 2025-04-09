@@ -19,7 +19,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review }) => {
       </div>
       <p className="text-sm italic text-gray-600">{review.comment}</p>
       <p className="text-xs text-gray-500 mt-1">
-        {(new Date(review.createdAt), 'MMM dd, yyyy HH:mm')}
+        {new Date(review.createdAt).toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
       </p>
     </li>
   );
