@@ -6,7 +6,6 @@ import { revalidatePath } from 'next/cache';
 
 export async function refreshProductDetailsAction(productId: string) {
   try {
-    // No need to explicitly return the data here if you just want to revalidate
     await fetchProductDetails(productId);
     revalidatePath(`/products/${productId}`); // This will trigger a re-render of the page
   } catch (error) {
