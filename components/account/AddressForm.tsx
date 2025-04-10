@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function ProfileForm({ userId }: { userId?: string }) {
+export default function AddressForm({ userId }: { userId?: string }) {
   const [isNew, setIsNew] = useState(false);
   const [form, setForm] = useState({
     addressLine1: "",

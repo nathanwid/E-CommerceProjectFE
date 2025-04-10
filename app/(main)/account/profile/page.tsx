@@ -12,7 +12,7 @@ export default async function page() {
   return (
     <>
       <h1 className="text-2xl mb-8 font-bold">My Profile</h1>
-      <ProfileForm token={token} />
+      <ProfileForm userId={userId} token={token} />
       <AddressForm userId={userId} />
     </>
   );
